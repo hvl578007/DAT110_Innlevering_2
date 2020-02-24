@@ -52,7 +52,7 @@ public class Storage {
 
 	public void addClientSession(String user, Connection connection) {
 
-		// TODO: add corresponding client session to the storage ok
+		// TODO: add corresponding client session to the storage - ok
 		//sjekke først?
 		//if(!clients.containsKey(user))
 		ClientSession session = new ClientSession(user, connection);

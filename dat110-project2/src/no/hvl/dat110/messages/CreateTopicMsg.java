@@ -12,7 +12,7 @@ public class CreateTopicMsg extends Message {
 	
 	private String topic;
 
-	public CreateTopicMsg(String topic, String user) {
+	public CreateTopicMsg(String user, String topic) {
 		super(MessageType.CREATETOPIC, user);
 		this.topic = topic;
 	}
