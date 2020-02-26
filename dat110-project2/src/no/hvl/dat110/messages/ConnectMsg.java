@@ -6,5 +6,10 @@ public class ConnectMsg extends Message {
 	public ConnectMsg (String user) {
 		super(MessageType.CONNECT, user);
 	}
+
+	@Override
+	public String toString() {
+		return "ConnectMsg [" + super.toString() + " ]";
+	}
 	
 }
