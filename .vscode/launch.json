@@ -1,0 +1,49 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Chapp<dat110-project2-chapp>",
+            "request": "launch",
+            "mainClass": "no.hvl.dat110.chapp.Chapp",
+            "projectName": "dat110-project2-chapp"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-BrokerServer<dat110-project2>",
+            "request": "launch",
+            "mainClass": "no.hvl.dat110.broker.BrokerServer",
+            "projectName": "dat110-project2"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-StopableExampleMain<dat110-project2>",
+            "request": "launch",
+            "mainClass": "no.hvl.dat110.common.StopableExampleMain",
+            "projectName": "dat110-project2"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-DisplayDevice<dat110-project2>",
+            "request": "launch",
+            "mainClass": "no.hvl.dat110.iotsystem.DisplayDevice",
+            "projectName": "dat110-project2"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-TemperatureDevice<dat110-project2>",
+            "request": "launch",
+            "mainClass": "no.hvl.dat110.iotsystem.TemperatureDevice",
+            "projectName": "dat110-project2"
+        }
+    ]
+}
