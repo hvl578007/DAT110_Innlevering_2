@@ -93,6 +93,17 @@ public class Dispatcher extends Stopable {
 
 		storage.addClientSession(user, connection);
 
+		//task E - henter meldingar om det er nokon på brukaren
+		Set<Message> messages = storage.getSavedMessages(user);
+		if (messages != null) {
+			ClientSession session = storage.getSession(user);
+			for (Message message : messages) {
+				if(message instanceof PublishMsg) {
+					session.send(message);
+				}
+			}
+		}
+
 	}
 
 	// called by dispatch upon receiving a disconnect message
@@ -158,7 +169,12 @@ public class Dispatcher extends Stopable {
 		if(subscribers != null) {
 			for (String user : subscribers) {
 				ClientSession session = storage.getSession(user);
-				if(session != null) session.send(msg);
+				if(session != null) {
+					session.send(msg);
+				} else {
+					//task E - må lagra melding om brukaren ikkje er på
+					storage.saveMessage(user, msg);
+				}
 			}
 		}
 	}

@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import no.hvl.dat110.common.TODO;
+import no.hvl.dat110.messages.Message;
 import no.hvl.dat110.common.Logger;
 import no.hvl.dat110.messagetransport.Connection;
 
@@ -19,9 +20,16 @@ public class Storage {
 	
 	protected ConcurrentHashMap<String, ClientSession> clients;
 
+	//task E message buffer
+	// held på meldingar om den brukaren er fråkopla
+	// mapper frå ein brukar til eit sett av meldingar
+	// evt frå ein ClientSession?
+	protected ConcurrentHashMap<String, Set<Message>> savedMessages;
+
 	public Storage() {
 		subscriptions = new ConcurrentHashMap<String, Set<String>>();
 		clients = new ConcurrentHashMap<String, ClientSession>();
+		savedMessages = new ConcurrentHashMap<String, Set<Message>>();
 	}
 
 	public Collection<ClientSession> getSessions() {
@@ -32,6 +40,27 @@ public class Storage {
 
 		return subscriptions.keySet();
 
+	}
+
+	//task E
+	//hent lagra meldingar på ein brukar (og slett dei frå mappet)
+	public Set<Message> getSavedMessages(String user) {
+		Set<Message> messages = savedMessages.get(user);
+		savedMessages.remove(user);
+		return messages;
+	}
+
+	//task E
+	//lagarer ein melding på ein fråkopla brukar
+	public void saveMessage(String user, Message msg) {
+		Set<Message> messages = savedMessages.get(user);
+		if (messages != null) {
+			messages.add(msg);
+		} else {
+			messages = ConcurrentHashMap.newKeySet();
+			savedMessages.put(user, messages);
+			messages.add(msg);
+		}
 	}
 
 	// get the session object for a given user
