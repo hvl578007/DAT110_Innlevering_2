@@ -83,10 +83,9 @@ public class Storage {
 
 		// TODO: add corresponding client session to the storage - ok
 		//sjekke først?
-		//if(!clients.containsKey(user))
+		//if (!clients.containsKey(user))
 		ClientSession session = new ClientSession(user, connection);
-		this.clients.put(user, session);
-				
+		this.clients.put(user, session);				
 	}
 
 	public void removeClientSession(String user) {
