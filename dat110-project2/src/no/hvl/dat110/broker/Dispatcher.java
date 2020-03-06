@@ -2,6 +2,8 @@ package no.hvl.dat110.broker;
 
 import java.util.Set;
 import java.util.Collection;
+import java.util.List;
+import java.util.Queue;
 
 import no.hvl.dat110.common.TODO;
 import no.hvl.dat110.common.Logger;
@@ -94,7 +96,7 @@ public class Dispatcher extends Stopable {
 		storage.addClientSession(user, connection);
 
 		//task E - henter meldingar om det er nokon på brukaren
-		Set<Message> messages = storage.getSavedMessages(user);
+		Queue<Message> messages = storage.getSavedMessages(user);
 		if (messages != null) {
 			ClientSession session = storage.getSession(user);
 			for (Message message : messages) {
@@ -174,6 +176,7 @@ public class Dispatcher extends Stopable {
 				} else {
 					//task E - må lagra melding om brukaren ikkje er på
 					storage.saveMessage(user, msg);
+					//skrive ein melding til loggaren?
 				}
 			}
 		}

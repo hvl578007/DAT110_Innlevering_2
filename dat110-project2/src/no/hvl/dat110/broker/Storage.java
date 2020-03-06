@@ -1,8 +1,11 @@
 package no.hvl.dat110.broker;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import no.hvl.dat110.common.TODO;
 import no.hvl.dat110.messages.Message;
@@ -24,12 +27,12 @@ public class Storage {
 	// held på meldingar om den brukaren er fråkopla
 	// mapper frå ein brukar til eit sett av meldingar
 	// evt frå ein ClientSession?
-	protected ConcurrentHashMap<String, Set<Message>> savedMessages;
+	protected ConcurrentHashMap<String, Queue<Message>> savedMessages;
 
 	public Storage() {
 		subscriptions = new ConcurrentHashMap<String, Set<String>>();
 		clients = new ConcurrentHashMap<String, ClientSession>();
-		savedMessages = new ConcurrentHashMap<String, Set<Message>>();
+		savedMessages = new ConcurrentHashMap<String, Queue<Message>>();
 	}
 
 	public Collection<ClientSession> getSessions() {
@@ -44,8 +47,8 @@ public class Storage {
 
 	//task E
 	//hent lagra meldingar på ein brukar (og slett dei frå mappet)
-	public Set<Message> getSavedMessages(String user) {
-		Set<Message> messages = savedMessages.get(user);
+	public Queue<Message> getSavedMessages(String user) {
+		Queue<Message> messages = savedMessages.get(user);
 		savedMessages.remove(user);
 		return messages;
 	}
@@ -53,13 +56,15 @@ public class Storage {
 	//task E
 	//lagarer ein melding på ein fråkopla brukar
 	public void saveMessage(String user, Message msg) {
-		Set<Message> messages = savedMessages.get(user);
+		Queue<Message> messages = savedMessages.get(user);
 		if (messages != null) {
 			messages.add(msg);
 		} else {
-			messages = ConcurrentHashMap.newKeySet();
+			//garanterer denne 
+			messages = new ConcurrentLinkedQueue<>();
 			savedMessages.put(user, messages);
-			messages.add(msg);
+			messages.offer(msg);
+			//messages.add(msg);
 		}
 	}
 
